@@ -1,0 +1,40 @@
+#
+# link to an external resource containing a resource identifier (prefix)
+# and an item identifier, and optionally a location and/or a term
+#
+namespace: external_resource
+datatypes:
+  identifier: {regex: "[a-zA-Z0-9_]+"}
+  external_resource_link:
+    composed_of:
+    - resource_prefix: identifier
+    - separator1: {constant: ":"}
+    - item: {regex: "[^\\t\\n!#]+"}
+    - location_part:
+        composed_of:
+        - location_separator: {constant: "#"}
+        - location: identifier
+        empty: Null
+        hide_constants: True
+    - term_part:
+        composed_of:
+        - term_separator: {constant: "!"}
+        - term: {regex: "[^\\t\\n!#]+"}
+        empty: Null
+        hide_constants: True
+    hide_constants: True
+testdata:
+  external_resource_link:
+    valid: {"pfx:item": {"resource_prefix": "pfx", "item": "item",
+                         "location_part": null, "term_part": null},
+            "pfx:item#location": {"resource_prefix": "pfx", "item": "item",
+                                  "location_part": {"location": "location"},
+                                  "term_part": null},
+            "pfx:item!term": {"resource_prefix": "pfx", "item": "item",
+                              "location_part": null,
+                              "term_part": {"term": "term"}},
+            "pfx:item#location!term":
+                     {"resource_prefix": "pfx", "item": "item",
+                      "location_part": {"location": "location"},
+                      "term_part": {"term": "term"}}}
+
