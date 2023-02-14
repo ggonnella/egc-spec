@@ -1,0 +1,72 @@
+# tags in EGC are similar to SAM
+#
+# the following types exist:
+#   (SAM-compatible types)
+#     Z generic string not containing tabs and newlines
+#     i integer value
+#     f floating-point value
+#   (note that several SAM tag types are not defined here: A, B, H)
+#
+#   (non-SAM types)
+#     J JSON not containing tabs and newlines
+#     L list of strings semicolon-separated;
+#         elements may not contain semicolons, tabs, and newlines
+#     O list of ontology terms semicolon-separated;
+#         element format: ont_pfx:term_id#term_label or ont_pfx:term_id
+#         elements may not contain newlines, tabs, semicolon,
+#                                : (in ont_pfx), # (in ont_pfx and term_id)
+#
+namespace: egc_tags
+datatypes:
+  identifier: {regex: "[a-zA-Z0-9_]+"}
+  ontology_term_wo_label:
+    composed_of:
+      - prefix: identifier
+      - term: identifier
+    splitted_by: ":"
+  ontology_term_w_label:
+    composed_of:
+      - prefix: identifier
+      - separator1: {constant: ":"}
+      - term: identifier
+      - separator2: {constant: "#"}
+      - label: string
+    hide_constants: True
+  ontology_term: {one_of: [ontology_term_wo_label, ontology_term_w_label]}
+  tags:
+    tagname: "[A-Za-z][A-Za-z0-9]"
+    tagged_list:
+      Z: {regex: "[ -~]*"}
+      i: integer
+      f: float
+      J: json
+      L:
+        list_of: string
+        splitted_by: ";"
+      O:
+        list_of: ontology_term
+        splitted_by: ";"
+    splitted_by: "\\t"
+testdata:
+  tags:
+    valid: {"Z1:Z:abc": {"Z1": {"type": "Z", "value": "abc"}},
+            "Z2:Z:a c": {"Z2": {"type": "Z", "value": "a c"}},
+            "Z3:Z: ": {"Z3": {"type": "Z", "value": " "}},
+            "Z4:Z:": {"Z4": {"type": "Z", "value": ""}},
+            "i1:i:1": {"i1": {"type": "i", "value": 1}},
+            "i2:i:-1": {"i2": {"type": "i", "value": -1}},
+            "i3:i:0": {"i3": {"type": "i", "value": 0}},
+            "f1:f:1.0": {"f1": {"type": "f", "value": 1.0}},
+            "f2:f:-1.1e+21": {"f2": {"type": "f", "value": -1.1E21}},
+            "J1:J:[1,2,3]": {"J1": {"type": "J", "value":[1,2,3]}},
+            "J2:J:{\"a\":2}": {"J2": {"type": "J", "value":{"a":2}}},
+            "L1:L:a;a b; ;c": {"L1": {"type": "L",
+                                       "value": ["a", "a b", " ", "c"]}},
+            "O1:O:pfx1:term1;pfx2:term2#example :x#2":
+              {"O1": {"type": "O",
+                     "value": [
+                       {"prefix": "pfx1", "term":"term1"},
+                       {"prefix": "pfx2", "term":"term2",
+                        "label": "example :x#2"},
+              ]}},
+           }
