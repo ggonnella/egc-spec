@@ -1,0 +1,51 @@
+#
+# Usage contexts are declarations of where a given type of object
+# (e.g. tag) can be used in a multiple record types tabular file.
+#
+# The format of a usage context is the following:
+# rt[:st[|st...]][.fn[|fn...]][;rt...]
+# where rt is a record type, st is a subtype, fn is a field name
+#
+namespace: usage_context
+datatypes:
+  contexts: {list_of: context, splitted_by: ";"}
+  record_contexts: {list_of: record_context, splitted_by: ";"}
+  field_contexts: {list_of: field_context, splitted_by: ";"}
+  context: {one_of: [record_context, field_context]}
+  record_context:
+    composed_of:
+    - type: identifier
+    - subtypes: {list_of: identifier, splitted_by: "|"}
+    splitted_by: ":"
+    required: 1
+  field_context:
+    composed_of:
+    - record_context: record_context
+    - field_names: {list_of: identifier, splitted_by: "|"}
+    splitted_by: "."
+  identifier: {regex: "[a-zA-Z0-9_]+"}
+testdata:
+  field_context:
+    valid: {"Y.id":{"record_context":{"type":"Y"},"field_names":["id"]}}
+  record_context:
+    valid: {"C":{"type":"C"}, "C:x":{"type":"C", "subtypes": ["x"]}}
+  field_contexts:
+    valid:
+      "U.name;Y:z.id": [{"record_context":{"type":"U"},"field_names":["name"]},
+        {"record_context":{"type":"Y", "subtypes":["z"]},"field_names":["id"]}]
+  record_contexts:
+    valid: {"C;Y:foo;Z":[{"type":"C"},
+                         {"type":"Y", "subtypes": ["foo"]}, {"type":"Z"}]}
+  identifier:
+    valid: ["iW389", "C", "P0p", "ee", "lqS", "h5N", "iY", "uT", "tig", "0"]
+  context:
+    valid: {"Y.id":{"record_context":{"type":"Y"},"field_names":["id"]},
+            "C":{"type":"C"}, "C:x":{"type":"C", "subtypes": ["x"]}}
+  contexts:
+    valid: {"Y.id;C;C:x":[{"record_context":{"type":"Y"},"field_names":["id"]},
+            {"type":"C"}, {"type":"C", "subtypes": ["x"]}],
+            "G:strain.TS|TG;G:taxon|comb.XR":
+              [{"record_context": {"type": "G", "subtypes": ["strain"]},
+            "field_names":["TS", "TG"]},
+            {"record_context": {"type": "G", "subtypes": ["taxon", "comb"]},
+            "field_names": ["XR"]}]}
