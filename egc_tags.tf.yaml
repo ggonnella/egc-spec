@@ -17,6 +17,7 @@
 #                                : (in ont_pfx), # (in ont_pfx and term_id)
 #
 namespace: egc_tags
+include: usage_context.tf.yaml
 datatypes:
   identifier: {regex: "[a-zA-Z0-9_]+"}
   ontology_term_wo_label:
@@ -46,6 +47,16 @@ datatypes:
       O:
         list_of: ontology_term
         splitted_by: ";"
+    splitted_by: "\\t"
+  tag_name: {regex: "[A-Za-z][A-Za-z0-9]"}
+  tag_type: {regex: "[ZifJLO]"}
+  definition_line:
+    composed_of:
+      - record_type: {"constant": "F"}
+      - tag_name: tag_name
+      - tag_type: tag_type
+      - contexts: usage_context::contexts
+      - definition: string
     splitted_by: "\\t"
 testdata:
   tags:

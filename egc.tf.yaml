@@ -4,6 +4,7 @@ include:
   - organism_groups.tf.yaml
   - textual_sources.tf.yaml
   - usage_context.tf.yaml
+  - egc_tags.tf.yaml
 datatypes:
   uncommented_line:
     scope: line
@@ -15,17 +16,8 @@ datatypes:
       - attribute_line
       - model_line
       - unit_line
-  line:
-    scope: line
-    one_of:
-      - document_line
-      - snippet_line
-      - table_line
-      - group_line
-      - attribute_line
-      - model_line
-      - unit_line
-      - commented_line
+      - egc_tags::definition_line
+      - external_resource::definition_line
   commented_line:
     composed_of:
       - line_part: uncommented_line
@@ -36,6 +28,11 @@ datatypes:
           hide_constants: true
     merge_keys: ["line_part", "comment_part"]
     separator: "\\t"
+  line:
+    scope: line
+    one_of:
+      - uncommented_line
+      - commented_line
 testdata:
   line:
     valid:

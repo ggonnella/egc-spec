@@ -2,6 +2,7 @@
 # link to an external resource containing a resource identifier (prefix)
 # and an item identifier, and optionally a location and/or a term
 #
+include: usage_context.tf.yaml
 namespace: external_resource
 datatypes:
   identifier: {regex: "[a-zA-Z0-9_]+"}
@@ -24,6 +25,16 @@ datatypes:
         empty: {"term": Null}
     hide_constants: True
     merge_keys: ["location_part", "term_part"]
+  definition_line:
+    composed_of:
+      - record_type: {"constant": "X"}
+      - resource_prefix: identifier
+      - resource_name: string
+      - contexts: usage_context::contexts
+      - item_URL: string
+      - homepage: string
+      - citation: string
+    splitted_by: "\\t"
 testdata:
   external_resource_link:
     valid: {"pfx:item": {"resource_prefix": "pfx", "item": "item",
