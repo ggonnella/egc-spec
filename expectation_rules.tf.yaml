@@ -1,0 +1,45 @@
+include: egc_tags.tf.yaml
+datatypes:
+  identifier: {regex: "[a-zA-Z0-9_]+"}
+  identifier_list:
+    list_of: identifier
+    splitted_by: ";"
+  identifier_or_list:
+    one_of: [identifier, identifier_list]
+  group:
+    composed_of:
+      - id: identifier
+      - portion: string
+    splitted_by: ":"
+    required: 1
+  attribute_or_comparison:
+    one_of: [identifier, attribute_comparison]
+  attribute_comparison:
+    composed_of:
+      - id1: identifier
+      - id2: identifier
+    splitted_by: " vs "
+  relative_expectation_line:
+    composed_of:
+      - record_type: {"constant": "C"}
+      - id: identifier
+      - source: identifier_or_list
+      - attribute: attribute_or_comparison
+      - group1: group
+      - operator: string
+      - group2: group
+      - tags: egc_tags::tags
+    required: 7
+    splitted_by: "\\t"
+  absolute_expectation_line:
+    composed_of:
+      - record_type: {"constant": "V"}
+      - id: identifier
+      - source: identifier_or_list
+      - attribute: identifier
+      - group: group
+      - operator: string
+      - reference: string
+      - tags: egc_tags::tags
+    required: 7
+    splitted_by: "\\t"

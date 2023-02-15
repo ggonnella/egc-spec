@@ -47,7 +47,7 @@ Sources of rules:
 - 'S' (Snippet): reports a snippet of text from a document
 - 'T' (Tables): refers to a table in a document
 
-Metadata:
+Metadata (these lines do not support tags):
 - 'F' (tag deFinitions): describe user-specific tags usage contexts
                               format and semantics
 - 'X' (eXternal resources definitions): describe external resources,

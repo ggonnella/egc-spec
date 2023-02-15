@@ -5,6 +5,7 @@ include:
   - textual_sources.tf.yaml
   - usage_context.tf.yaml
   - egc_tags.tf.yaml
+  - expectation_rules.tf.yaml
 datatypes:
   uncommented_line:
     scope: line
@@ -18,6 +19,8 @@ datatypes:
       - unit_line
       - egc_tags::definition_line
       - external_resource::definition_line
+      - relative_expectation_line
+      - absolute_expectation_line
   commented_line:
     composed_of:
       - line_part: uncommented_line
