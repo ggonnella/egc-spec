@@ -1,0 +1,42 @@
+include: egc_tags.tf.yaml
+datatypes:
+  identifier: {regex: "[a-zA-Z0-9_]+"}
+  document_line:
+    composed_of:
+      - record_type: {"constant": "D"}
+      - document_id: identifier
+      - link: string
+      - tags: egc_tags::tags
+    required: 3
+    splitted_by: "\\t"
+  snippet_line:
+    composed_of:
+      - record_type: {"constant": "S"}
+      - id: identifier
+      - document_id: identifier
+      - text: string
+      - tags: egc_tags::tags
+    required: 3
+    splitted_by: "\\t"
+  table_line:
+    composed_of:
+      - record_type: {"constant": "T"}
+      - id: identifier
+      - document_id: identifier
+      - name: string
+      - tags: egc_tags::tags
+    required: 3
+    splitted_by: "\\t"
+testdata:
+  document_line:
+    valid: {"D\\tPMID23190728\\thttps://www.nature.com/articles/ismej2012149":
+              {"record_type": "D", "document_id": "PMID23190728",
+               "link": "https://www.nature.com/articles/ismej2012149"}}
+  snippet_line:
+    valid: {"S\\tSA97\\tPMID24999826\\tPolyhydroxyalkanoate synthase was found almost in all representatives of Thaumarchaeota":
+               {"record_type": "S", "id": "SA97", "document_id": "PMID24999826",
+               "text": "Polyhydroxyalkanoate synthase was found almost in all representatives of Thaumarchaeota"}}
+  table_line:
+    valid: {"T\\tT3\\tPMID23671678\\tTable 2":
+               {"record_type": "T", "id": "T3",
+                "document_id": "PMID23671678", "name": "Table 2"}}
