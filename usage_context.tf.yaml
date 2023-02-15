@@ -14,8 +14,8 @@ datatypes:
   context: {one_of: [record_context, field_context]}
   record_context:
     composed_of:
-    - type: identifier
-    - subtypes: {list_of: identifier, splitted_by: "|"}
+    - record_type: identifier
+    - record_subtypes: {list_of: identifier, splitted_by: "|"}
     splitted_by: ":"
     required: 1
   field_context:
@@ -23,29 +23,33 @@ datatypes:
     - record_context: record_context
     - field_names: {list_of: identifier, splitted_by: "|"}
     splitted_by: "."
+    merge_keys: ['record_context']
   identifier: {regex: "[a-zA-Z0-9_]+"}
 testdata:
   field_context:
-    valid: {"Y.id":{"record_context":{"type":"Y"},"field_names":["id"]}}
+    valid: {"Y.id":{"record_type":"Y","field_names":["id"]}}
   record_context:
-    valid: {"C":{"type":"C"}, "C:x":{"type":"C", "subtypes": ["x"]}}
+    valid: {"C":{"record_type":"C"},
+            "C:x":{"record_type":"C", "record_subtypes": ["x"]}}
   field_contexts:
     valid:
-      "U.name;Y:z.id": [{"record_context":{"type":"U"},"field_names":["name"]},
-        {"record_context":{"type":"Y", "subtypes":["z"]},"field_names":["id"]}]
+      "U.name;Y:z.id": [{"record_type":"U","field_names":["name"]},
+        {"record_type":"Y", "record_subtypes":["z"],"field_names":["id"]}]
   record_contexts:
-    valid: {"C;Y:foo;Z":[{"type":"C"},
-                         {"type":"Y", "subtypes": ["foo"]}, {"type":"Z"}]}
+    valid: {"C;Y:foo;Z":[{"record_type":"C"},
+                         {"record_type":"Y", "record_subtypes": ["foo"]},
+                         {"record_type":"Z"}]}
   identifier:
     valid: ["iW389", "C", "P0p", "ee", "lqS", "h5N", "iY", "uT", "tig", "0"]
   context:
-    valid: {"Y.id":{"record_context":{"type":"Y"},"field_names":["id"]},
-            "C":{"type":"C"}, "C:x":{"type":"C", "subtypes": ["x"]}}
+    valid: {"Y.id":{"record_type":"Y","field_names":["id"]},
+            "C":{"record_type":"C"},
+            "C:x":{"record_type":"C", "record_subtypes": ["x"]}}
   contexts:
-    valid: {"Y.id;C;C:x":[{"record_context":{"type":"Y"},"field_names":["id"]},
-            {"type":"C"}, {"type":"C", "subtypes": ["x"]}],
+    valid: {"Y.id;C;C:x":[{"record_type":"Y","field_names":["id"]},
+            {"record_type":"C"}, {"record_type":"C", "record_subtypes": ["x"]}],
             "G:strain.TS|TG;G:taxon|comb.XR":
-              [{"record_context": {"type": "G", "subtypes": ["strain"]},
+              [{"record_type": "G", "record_subtypes": ["strain"],
             "field_names":["TS", "TG"]},
-            {"record_context": {"type": "G", "subtypes": ["taxon", "comb"]},
+            {"record_type": "G", "record_subtypes": ["taxon", "comb"],
             "field_names": ["XR"]}]}

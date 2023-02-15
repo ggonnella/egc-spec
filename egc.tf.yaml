@@ -28,12 +28,13 @@ datatypes:
       - commented_line
   commented_line:
     composed_of:
-      - line: uncommented_line
-      - comment:
+      - line_part: uncommented_line
+      - comment_part:
           composed_of:
             - prefix: {constant: "#"}
-            - content: string
+            - comment: string
           hide_constants: true
+    merge_keys: ["line_part", "comment_part"]
     separator: "\\t"
 testdata:
   line:
@@ -48,15 +49,12 @@ testdata:
           UP: {"type": "Z", "value": "P9WGE7"}
           RV: {"type": "Z", "value": "Y"}
       "M\\tU310\\tInterPro\\tIPR019833\\tMn/Fe_SOD_BS\\tUP:Z:P9WGE7\\tRV:Z:Y\\t# test":
-        comment:
-          content:
-            " test"
-        line:
-          record_type: M
-          unit_id: U310
-          resource_id: InterPro
-          model_id: IPR019833
-          model_name: "Mn/Fe_SOD_BS"
-          tags:
-            UP: {"type": "Z", "value": "P9WGE7"}
-            RV: {"type": "Z", "value": "Y"}
+        comment: " test"
+        record_type: M
+        unit_id: U310
+        resource_id: InterPro
+        model_id: IPR019833
+        model_name: "Mn/Fe_SOD_BS"
+        tags:
+          UP: {"type": "Z", "value": "P9WGE7"}
+          RV: {"type": "Z", "value": "Y"}

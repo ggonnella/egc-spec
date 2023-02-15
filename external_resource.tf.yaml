@@ -14,27 +14,28 @@ datatypes:
         composed_of:
         - location_separator: {constant: "#"}
         - location: identifier
-        empty: Null
+        empty: {"location": Null}
         hide_constants: True
     - term_part:
         composed_of:
         - term_separator: {constant: "!"}
         - term: {regex: "[^\\t\\n!#]+"}
-        empty: Null
         hide_constants: True
+        empty: {"term": Null}
     hide_constants: True
+    merge_keys: ["location_part", "term_part"]
 testdata:
   external_resource_link:
     valid: {"pfx:item": {"resource_prefix": "pfx", "item": "item",
-                         "location_part": null, "term_part": null},
+                         "location": null, "term": null},
             "pfx:item#location": {"resource_prefix": "pfx", "item": "item",
-                                  "location_part": {"location": "location"},
-                                  "term_part": null},
+                                  "location": "location",
+                                  "term": null},
             "pfx:item!term": {"resource_prefix": "pfx", "item": "item",
-                              "location_part": null,
-                              "term_part": {"term": "term"}},
+                              "location": null,
+                              "term": "term"},
             "pfx:item#location!term":
                      {"resource_prefix": "pfx", "item": "item",
-                      "location_part": {"location": "location"},
-                      "term_part": {"term": "term"}}}
+                      "location": "location",
+                      "term": "term"}}
 
