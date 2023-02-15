@@ -1,0 +1,111 @@
+include: egc_tags.tf.yaml
+datatypes:
+  identifier: {regex: "[a-zA-Z0-9_]+"}
+  unit_line:
+    composed_of:
+      - record_type: {"constant": "U"}
+      - id: identifier
+      - type: string
+      - definition: string
+      - tags: egc_tags::tags
+    required: 4
+    splitted_by: "\\t"
+  measurement_mode_simple: identifier
+  measurement_mode_relative:
+    composed_of:
+      - mode: identifier
+      - reference: identifier
+    splitted_by: ":"
+  measurement_mode_w_location:
+    composed_of:
+      - mode: identifier
+      - sep1: {constant: "!"}
+      - location_type: identifier
+      - sep2: {constant: ":"}
+      - location_label: string
+    hide_constants: True
+  measurement_mode_relative_w_location:
+    composed_of:
+      - mode: identifier
+      - sep1: {constant: ":"}
+      - reference: identifier
+      - sep2: {constant: "!"}
+      - location_type: identifier
+      - sep3: {constant: ":"}
+      - location_label: string
+    hide_constants: True
+  measurement_mode:
+    one_of:
+      - measurement_mode_simple
+      - measurement_mode_relative
+      - measurement_mode_w_location
+      - measurement_mode_relative_w_location
+  attribute_line:
+    composed_of:
+      - record_type: {"constant": "A"}
+      - id: identifier
+      - unit_id: identifier
+      - mode: measurement_mode
+      - tags: egc_tags::tags
+    required: 4
+    splitted_by: "\\t"
+  model_line:
+    composed_of:
+      - record_type: {"constant": "M"}
+      - unit_id: identifier
+      - resource_id: identifier
+      - model_id: identifier
+      - model_name: string
+      - tags: egc_tags::tags
+    required: 5
+    splitted_by: "\\t"
+testdata:
+  model_line:
+    valid:
+      "M\\tU198\\tPfam\\tPF02474\\tNodA":
+        record_type: M
+        unit_id: U198
+        resource_id: Pfam
+        model_id: PF02474
+        model_name: "NodA"
+    oneway:
+      "M\\tU310\\tInterPro\\tIPR019833\\tMn/Fe_SOD_BS\\tUP:Z:P9WGE7\\tRV:Z:Y":
+        record_type: M
+        unit_id: U310
+        resource_id: InterPro
+        model_id: IPR019833
+        model_name: "Mn/Fe_SOD_BS"
+        tags:
+          UP: {"type": "Z", "value": "P9WGE7"}
+          RV: {"type": "Z", "value": "Y"}
+  unit_line:
+    valid:
+      "U\\tUH32\\tarCOG\\tarCOG04866":
+        record_type: "U"
+        id: "UH32"
+        type: "arCOG"
+        definition: "arCOG04866"
+  attribute_line:
+    valid:
+      "A\\tA93\\tU93\\tpresence":
+        record_type: "A"
+        id: "A93"
+        unit_id: U93
+        mode: "presence"
+      "A\\tA4\\tU4\\tratio:U_anyCOG":
+        record_type: "A"
+        id: "A4"
+        unit_id: U4
+        mode: {"mode": "ratio", "reference": "U_anyCOG"}
+      "A\\tA204\\tU204\\tpresence!replicon_type:plasmid":
+        record_type: "A"
+        id: "A204"
+        unit_id: U204
+        mode: {"mode": "presence", "location_type": "replicon_type",
+               "location_label": "plasmid"}
+      "A\\tA203\\tU_baseGC\\tratio:U_baseN!replicon_type:chromosome":
+        record_type: "A"
+        id: "A203"
+        unit_id: U_baseGC
+        mode: {"mode": "ratio", "reference": "U_baseN",
+               "location_type": "replicon_type", "location_label": "chromosome"}
