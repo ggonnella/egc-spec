@@ -1,0 +1,33 @@
+include: egc_tags.tf.yaml
+datatypes:
+  identifier: {regex: "[a-zA-Z0-9_]+"}
+  group_line:
+    composed_of:
+      - record_type: {"constant": "G"}
+      - id: identifier
+      - name: string
+      - type: string
+      - definition: string
+      - tags: egc_tags::tags
+    required: 4
+    splitted_by: "\\t"
+testdata:
+  group_line:
+    valid:
+      "G\\tG10024\\tThermoproteus\\ttaxonomic\\ttaxid:2270\\tTR:Z:genus":
+        record_type: "G"
+        id: "G10024"
+        name: "Thermoproteus"
+        type: "taxonomic"
+        definition: "taxid:2270"
+        tags:
+          TR: {type: "Z", value: "genus"}
+      "G\\tG110\\tgram-negative bacteria\\tcombined\\tG100 & G_bacteria\\tXD:Z:MICRO:0001373":
+        record_type: "G"
+        id: "G110"
+        name: "gram-negative bacteria"
+        type: "combined"
+        definition: "G100 & G_bacteria"
+        tags:
+          XD: {type: "Z", value: "MICRO:0001373"}
+
