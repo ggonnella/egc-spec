@@ -52,7 +52,7 @@ datatypes:
   tag_type: {regex: "[ZifJLO]"}
   definition_line:
     composed_of:
-      - record_type: {"constant": "F"}
+      - record_type: {"constant": "Y"}
       - tag_name: tag_name
       - tag_type: tag_type
       - contexts: usage_context::contexts

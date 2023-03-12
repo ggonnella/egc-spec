@@ -48,10 +48,10 @@ Sources of rules:
 - 'T' (Tables): refers to a table in a document
 
 Metadata (these lines do not support tags):
-- 'F' (tag deFinitions): describe user-specific tags usage contexts
-                              format and semantics
 - 'X' (eXternal resources definitions): describe external resources,
     their usage contexts, homepage, citation and item URLs
+- 'Y' (tag definitions): describe user-specific tags usage contexts
+                              format and semantics
 
 ## Implementation of the specification
 
