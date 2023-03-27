@@ -1,42 +1,47 @@
-include: egc_tags.tf.yaml
+include: [ egc_tags.tf.yaml, external_resource.tf.yaml ]
 datatypes:
   identifier: {regex: "[a-zA-Z0-9_]+"}
   document_line:
     composed_of:
       - record_type: {"constant": "D"}
-      - document_id: identifier
+      - document_id: external_resource::external_resource_link
       - link: string
       - tags: egc_tags::tags
     required: 3
-    splitted_by: "\\t"
+    splitted_by: "\t"
   snippet_line:
     composed_of:
       - record_type: {"constant": "S"}
       - id: identifier
-      - document_id: identifier
+      - document_id: external_resource::external_resource_link
       - text: string
       - tags: egc_tags::tags
     required: 4
-    splitted_by: "\\t"
+    splitted_by: "\t"
   table_line:
     composed_of:
       - record_type: {"constant": "T"}
       - id: identifier
-      - document_id: identifier
+      - document_id: external_resource::external_resource_link
       - table_ref: string
       - tags: egc_tags::tags
     required: 4
-    splitted_by: "\\t"
+    splitted_by: "\t"
 testdata:
   document_line:
-    valid: {"D\\tPMID23190728\\thttps://www.nature.com/articles/ismej2012149":
-              {"record_type": "D", "document_id": "PMID23190728",
+    valid: {"D\tPMID:23190728\thttps://www.nature.com/articles/ismej2012149":
+               {"record_type": "D", "document_id":{"resource_prefix":"PMID",
+               "item":"23190728","location":null,"term":null},
                "link": "https://www.nature.com/articles/ismej2012149"}}
   snippet_line:
-    valid: {"S\\tSA97\\tPMID24999826\\tPolyhydroxyalkanoate synthase was found almost in all representatives of Thaumarchaeota":
-               {"record_type": "S", "id": "SA97", "document_id": "PMID24999826",
+    valid: {"S\tSA97\tPMID:24999826\tPolyhydroxyalkanoate synthase was found almost in all representatives of Thaumarchaeota":
+               {"record_type": "S", "id": "SA97",
+               "document_id":{"resource_prefix":"PMID", "item":"24999826",
+               "location":null,"term":null},
                "text": "Polyhydroxyalkanoate synthase was found almost in all representatives of Thaumarchaeota"}}
   table_line:
-    valid: {"T\\tT3\\tPMID23671678\\tTable 2":
+    valid: {"T\tT3\tPMID:23671678\tTable 2":
                {"record_type": "T", "id": "T3",
-                "document_id": "PMID23671678", "table_ref": "Table 2"}}
+               "document_id":{"resource_prefix":"PMID", "item":"23671678",
+               "location":null,"term":null},
+               "table_ref": "Table 2"}}
