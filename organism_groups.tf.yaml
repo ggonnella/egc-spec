@@ -9,7 +9,7 @@ datatypes:
       - type: string
       - definition: string
       - tags: egc_tags::tags
-    required: 4
+    required: 5
     splitted_by: "\\t"
 testdata:
   group_line:
