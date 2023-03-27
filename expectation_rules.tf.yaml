@@ -3,7 +3,7 @@ datatypes:
   identifier: {regex: "[a-zA-Z0-9_]+"}
   identifier_list:
     list_of: identifier
-    splitted_by: ";"
+    splitted_by: ","
   identifier_or_list:
     one_of: [identifier, identifier_list]
   group:
@@ -18,7 +18,7 @@ datatypes:
     composed_of:
       - id1: identifier
       - id2: identifier
-    splitted_by: " vs "
+    splitted_by: ","
   relative_expectation_line:
     composed_of:
       - record_type: {"constant": "C"}
@@ -30,7 +30,7 @@ datatypes:
       - group2: group
       - tags: egc_tags::tags
     required: 7
-    splitted_by: "\\t"
+    splitted_by: "\t"
   absolute_expectation_line:
     composed_of:
       - record_type: {"constant": "V"}
@@ -42,4 +42,4 @@ datatypes:
       - reference: string
       - tags: egc_tags::tags
     required: 7
-    splitted_by: "\\t"
+    splitted_by: "\t"

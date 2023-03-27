@@ -7,9 +7,11 @@ datatypes:
       - id: identifier
       - type: string
       - definition: string
+      - symbol: string
+      - description: string
       - tags: egc_tags::tags
-    required: 4
-    splitted_by: "\\t"
+    required: 6
+    splitted_by: "	"
   measurement_mode_simple: identifier
   measurement_mode_relative:
     composed_of:
@@ -40,15 +42,6 @@ datatypes:
       - measurement_mode_relative
       - measurement_mode_w_location
       - measurement_mode_relative_w_location
-  attribute_line:
-    composed_of:
-      - record_type: {"constant": "A"}
-      - id: identifier
-      - unit_id: identifier
-      - mode: measurement_mode
-      - tags: egc_tags::tags
-    required: 4
-    splitted_by: "\\t"
   model_line:
     composed_of:
       - record_type: {"constant": "M"}
@@ -58,18 +51,27 @@ datatypes:
       - model_name: string
       - tags: egc_tags::tags
     required: 5
-    splitted_by: "\\t"
+    splitted_by: "	"
+  attribute_line:
+    composed_of:
+      - record_type: {"constant": "A"}
+      - id: identifier
+      - unit_id: identifier
+      - mode: measurement_mode
+      - tags: egc_tags::tags
+    required: 4
+    splitted_by: "	"
 testdata:
   model_line:
     valid:
-      "M\\tU198\\tPfam\\tPF02474\\tNodA":
+      "M\tU198\tPfam\tPF02474\tNodA":
         record_type: M
         unit_id: U198
         resource_id: Pfam
         model_id: PF02474
         model_name: "NodA"
     oneway:
-      "M\\tU310\\tInterPro\\tIPR019833\\tMn/Fe_SOD_BS\\tUP:Z:P9WGE7\\tRV:Z:Y":
+      "M\tU310\tInterPro\tIPR019833\tMn/Fe_SOD_BS\tUP:Z:P9WGE7\tRV:Z:Y":
         record_type: M
         unit_id: U310
         resource_id: InterPro
@@ -80,30 +82,30 @@ testdata:
           RV: {"type": "Z", "value": "Y"}
   unit_line:
     valid:
-      "U\\tUH32\\tarCOG\\tarCOG04866":
+      "U\tUH32\tarCOG\tarCOG04866":
         record_type: "U"
         id: "UH32"
         type: "arCOG"
         definition: "arCOG04866"
   attribute_line:
     valid:
-      "A\\tA93\\tU93\\tpresence":
+      "A\tA93\tU93\tpresence":
         record_type: "A"
         id: "A93"
         unit_id: U93
         mode: "presence"
-      "A\\tA4\\tU4\\tratio:U_anyCOG":
+      "A\tA4\tU4\tratio:U_anyCOG":
         record_type: "A"
         id: "A4"
         unit_id: U4
         mode: {"mode": "ratio", "reference": "U_anyCOG"}
-      "A\\tA204\\tU204\\tpresence!replicon_type:plasmid":
+      "A\tA204\tU204\tpresence!replicon_type:plasmid":
         record_type: "A"
         id: "A204"
         unit_id: U204
         mode: {"mode": "presence", "location_type": "replicon_type",
                "location_label": "plasmid"}
-      "A\\tA203\\tU_baseGC\\tratio:U_baseN!replicon_type:chromosome":
+      "A\tA203\tU_baseGC\tratio:U_baseN!replicon_type:chromosome":
         record_type: "A"
         id: "A203"
         unit_id: U_baseGC

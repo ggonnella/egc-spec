@@ -10,11 +10,11 @@ datatypes:
       - definition: string
       - tags: egc_tags::tags
     required: 5
-    splitted_by: "\\t"
+    splitted_by: "\t"
 testdata:
   group_line:
     valid:
-      "G\\tG10024\\tThermoproteus\\ttaxonomic\\ttaxid:2270\\tTR:Z:genus":
+      "G\tG10024\tThermoproteus\ttaxonomic\ttaxid:2270\tTR:Z:genus":
         record_type: "G"
         id: "G10024"
         name: "Thermoproteus"
@@ -22,7 +22,7 @@ testdata:
         definition: "taxid:2270"
         tags:
           TR: {type: "Z", value: "genus"}
-      "G\\tG110\\tgram-negative bacteria\\tcombined\\tG100 & G_bacteria\\tXD:Z:MICRO:0001373":
+      "G\tG110\tgram-negative bacteria\tcombined\tG100 & G_bacteria\tXD:Z:MICRO:0001373":
         record_type: "G"
         id: "G110"
         name: "gram-negative bacteria"

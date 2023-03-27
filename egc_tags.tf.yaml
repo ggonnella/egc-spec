@@ -47,7 +47,7 @@ datatypes:
       O:
         list_of: ontology_term
         splitted_by: ";"
-    splitted_by: "\\t"
+    splitted_by: "\t"
   tag_name: {regex: "[A-Za-z][A-Za-z0-9]"}
   tag_type: {regex: "[ZifJLO]"}
   definition_line:
@@ -57,7 +57,7 @@ datatypes:
       - tag_type: tag_type
       - contexts: usage_context::contexts
       - definition: string
-    splitted_by: "\\t"
+    splitted_by: "\t"
 testdata:
   tags:
     valid: {"Z1:Z:abc": {"Z1": {"type": "Z", "value": "abc"}},

@@ -34,7 +34,7 @@ datatypes:
       - item_URL: string
       - homepage: string
       - citation: string
-    splitted_by: "\\t"
+    splitted_by: "\t"
 testdata:
   external_resource_link:
     valid: {"pfx:item": {"resource_prefix": "pfx", "item": "item",

@@ -8,7 +8,7 @@ datatypes:
       - link: string
       - tags: egc_tags::tags
     required: 3
-    splitted_by: "\t"
+    splitted_by: "	"
   snippet_line:
     composed_of:
       - record_type: {"constant": "S"}

@@ -7,6 +7,7 @@ include:
   - egc_tags.tf.yaml
   - expectation_rules.tf.yaml
 datatypes:
+  default: line
   uncommented_line:
     scope: line
     one_of:
@@ -30,7 +31,7 @@ datatypes:
             - comment: string
           hide_constants: true
     merge_keys: ["line_part", "comment_part"]
-    separator: "\\t"
+    separator: "\t"
   line:
     scope: line
     one_of:
@@ -39,7 +40,7 @@ datatypes:
 testdata:
   line:
     valid:
-      "M\\tU310\\tInterPro\\tIPR019833\\tMn/Fe_SOD_BS\\tUP:Z:P9WGE7\\tRV:Z:Y":
+      "M\tU310\tInterPro\tIPR019833\tMn/Fe_SOD_BS\tUP:Z:P9WGE7\tRV:Z:Y":
         record_type: M
         unit_id: U310
         resource_id: InterPro
@@ -48,7 +49,7 @@ testdata:
         tags:
           UP: {"type": "Z", "value": "P9WGE7"}
           RV: {"type": "Z", "value": "Y"}
-      "M\\tU310\\tInterPro\\tIPR019833\\tMn/Fe_SOD_BS\\tUP:Z:P9WGE7\\tRV:Z:Y\\t# test":
+      "M\tU310\tInterPro\tIPR019833\tMn/Fe_SOD_BS\tUP:Z:P9WGE7\tRV:Z:Y\t# test":
         comment: " test"
         record_type: M
         unit_id: U310
