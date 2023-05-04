@@ -37,7 +37,7 @@ datatypes:
   tags:
     tagname: "[A-Za-z][A-Za-z0-9]"
     tagged_list:
-      Z: {regex: "[ -~]*"}
+      Z: {regex: '[ -~]*'}
       i: integer
       f: float
       J: json
