@@ -1,11 +1,32 @@
 include: egc_tags.tf.yaml
 datatypes:
   identifier: {regex: "[a-zA-Z0-9_]+"}
+  unit_type:
+    one_of: [setcat_type,
+             simple_type]
+  setcat_type:
+    composed_of:
+      - kind: {values: ["ctg": "category", "set"]}
+      - enumerating: {values: ["!": True, ""], empty: False}
+      - sep1: {constant: ":"}
+      - multi: {values: ["+": True, "": False], empty: False}
+      - base_type: identifier
+      - sep2: {constant: ":"}
+      - resource: identifier
+    hide_constants: True
+    required: 5
+  simple_type:
+    composed_of:
+      - base_type: identifier
+      - resource: identifier
+    required: 1
+    implicit: {"enumerating": False, "multi": False, "kind": "simple"}
+    splitted_by: ":"
   unit_line:
     composed_of:
       - record_type: {"constant": "U"}
       - id: identifier
-      - type: string
+      - type: unit_type
       - definition: string
       - symbol: string
       - description: string
