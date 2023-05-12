@@ -11,8 +11,11 @@ datatypes:
       - sep1: {constant: ":"}
       - multi: {values: ["+": True, "": False], empty: False}
       - base_type: identifier
-      - sep2: {constant: ":"}
-      - resource: identifier
+      - resource_part:
+          composed_of:
+            - resource: identifier
+          prefix: ":"
+    merge_keys: ["resource_part"]
     hide_constants: True
     required: 5
   simple_type:
